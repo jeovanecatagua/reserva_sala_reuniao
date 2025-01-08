@@ -190,5 +190,5 @@ if acesso.authenticate_user():
     elif perfil == "Executor":
         usuario_exec()
 
-# PagesCreateReserva.Incluir_usuario()
-# PagesListReserva.ListUsuarios()
+PagesCreateReserva.Incluir_usuario()
+PagesListReserva.ListUsuarios()
