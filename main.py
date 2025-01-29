@@ -2,30 +2,13 @@ import streamlit as st
 import Pages.reserva_sala_reuniao.Create as PagesCreateReserva
 import Pages.reserva_sala_reuniao.List as PagesListReserva
 import Pages.reserva_sala_reuniao.validacao_user as acesso
+import Pages.reserva_sala_reuniao.backup as FazerBackup
 from Controllers.ControllersReservas import create_tb, obter_perfil_usuario
 import os
 
+
 create_tb()
 print("Tabelas criadas com sucesso!")
-
-# Caminho do banco de dados
-db_path = "dados_projeto.db"
-
-# Criar botão de download
-with open(db_path, "rb") as f:
-    st.download_button(
-        label="Baixar Banco de Dados",
-        data=f,
-        file_name="dados_projeto.db",
-        mime="application/x-sqlite3",
-    )
-
-# Verifica se o arquivo do banco existe
-if os.path.exists(db_path):
-    st.write("Banco de dados encontrado!")
-else:
-    st.write("⚠️ O banco de dados não foi encontrado no diretório do aplicativo!")
-
 
 # --- Define layout baseado no login ---
 if "authenticated" in st.session_state and st.session_state["authenticated"]:
@@ -117,7 +100,7 @@ st.markdown(
 
 def usuario_adm():
     # Criar colunas para botões
-    col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
+    col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
     with col1:
         st.sidebar.title("Reserva")
         reservar_button = st.sidebar.button("Reservar Sala", key="reservar_button")
@@ -134,6 +117,8 @@ def usuario_adm():
         incluir_sala_button = st.sidebar.button("Cadastrar Sala", key="cadastrar_sala_button")
     with col7:
         excluir_sala_button = st.sidebar.button("Excluir Sala", key="excluir_sala_button")
+    with col7:
+        backup_button = st.sidebar.button("Backup", key="backup_button")
 
     # Armazenar estado atual no session_state
     if "active_page" not in st.session_state:
@@ -154,6 +139,8 @@ def usuario_adm():
         st.session_state["active_page"] = "cadastrarSala"
     elif excluir_sala_button:
         st.session_state["active_page"] = "excluirSala"
+    elif backup_button:
+        st.session_state["active_page"] = "fazerBackup"
 
     # Renderizar a página atual
     if st.session_state["active_page"] == "reservar":
@@ -177,6 +164,8 @@ def usuario_adm():
     elif st.session_state["active_page"] == "excluirSala":
         PagesCreateReserva.ExcluirSala()
         PagesListReserva.ListSalas()
+    elif st.session_state["active_page"] == "fazerBackup":
+        FazerBackup.fazer_backup()
 
 def usuario_exec():
     # Criar colunas para botões
