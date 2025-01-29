@@ -7,6 +7,8 @@ from Controllers.ControllersReservas import create_tb, obter_perfil_usuario
 create_tb()
 print("Tabelas criadas com sucesso!")
 
+st.set_page_config(layout="wide")
+
 st.markdown(
     """
     <style>
