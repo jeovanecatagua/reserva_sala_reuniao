@@ -83,12 +83,12 @@ st.markdown(
     }
     </style>
 
-    <div class="fixed-footer">
-        <img src="https://example.com/sua-imagem.png" alt="Logo" width="120"><br>
-        <p>Seu texto fixo aqui!</p>
-    </div>
     """,
     unsafe_allow_html=True
+    #     <div class="fixed-footer">
+    #     <img src="https://example.com/sua-imagem.png" alt="Logo" width="120"><br>
+    #     <p>Seu texto fixo aqui!</p>
+    # </div>
 )
 
 def usuario_adm():
