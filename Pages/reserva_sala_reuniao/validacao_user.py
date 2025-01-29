@@ -3,11 +3,6 @@ import sqlite3
 import pandas as pd
 import time
 
-# --- Define layout baseado no login ---
-if "authenticated" in st.session_state and st.session_state["authenticated"]:
-    st.set_page_config(layout="wide")  # Modo WIDE quando autenticado
-else:
-    st.set_page_config(layout="centered")  # Layout tradicional na tela de login
 
 def verificar_usuario(email, senha):
     con    = sqlite3.connect("dados_projeto.db")

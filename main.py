@@ -7,6 +7,9 @@ from Controllers.ControllersReservas import create_tb, obter_perfil_usuario
 create_tb()
 print("Tabelas criadas com sucesso!")
 
+# --- Define layout baseado no login ---
+if "authenticated" in st.session_state and st.session_state["authenticated"]:
+    st.set_page_config(layout="wide")  # Modo WIDE quando autenticado
 
 st.markdown(
     """
@@ -192,4 +195,4 @@ if acesso.authenticate_user():
         usuario_exec()
 
 # PagesCreateReserva.Incluir_usuario()
-# PagesListReserva.ListUsuarios()
+# PagesListReserva.ListUsuarios() IqbP0maj
