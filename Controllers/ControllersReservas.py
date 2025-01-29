@@ -299,3 +299,22 @@ def obter_perfil_usuario(usuario):
     usuario_ = cursor.fetchone()
     conn.commit()
     return usuario_[0] if usuario_ else None
+
+
+def fazer_backup():
+    backup_path = "backup.db"
+    
+    # Criar cópia do banco de dados
+    conn = sqlite3.connect("dados_projeto.db")
+    with open(backup_path, "wb") as f:
+        for linha in conn.iterdump():
+            f.write(f"{linha}\n".encode("utf-8"))
+    conn.close()
+    
+    return backup_path
+
+# Criar botão de download
+if st.button("Fazer Backup Agora"):
+    backup_file = fazer_backup()
+    with open(backup_file, "rb") as f:
+        st.download_button("Baixar Backup", f, file_name="backup.db", mime="application/x-sqlite3")
