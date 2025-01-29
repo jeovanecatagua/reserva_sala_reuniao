@@ -14,22 +14,6 @@ def List():
         columns=['ID', 'Usuário', 'Sala de reunião', 'Data da reserva', 'Horário de ínicio', 'Horário de fim']
     )
 
-    # # Adiciona filtros
-    # with st.sidebar:
-    #     st.header("Filtros")
-    #     salas       = df['Sala de reunião'].unique()
-    #     sala_filtro = st.selectbox("Selecione a sala", options=["Todas"] + sorted(list(salas)))
-    #     data_filtro = st.date_input("Selecione a data (opcional)", value=None, format="DD/MM/YYYY")
-
-    #     if sala_filtro != "Todas":
-    #         df = df[df['Sala de reunião'] == sala_filtro]
-
-    #     if data_filtro:
-    #         data_formatada = data_filtro.strftime("%d/%m/%Y")
-    #         df = df[df['Data da reserva'] == data_formatada]
-
-    # st.table(df)
-
     tab_filtros, tab_reservas = st.tabs(["Filtros", "Reservas"])
 
     with tab_filtros:
@@ -60,7 +44,7 @@ def ListUsuarios():
         columns=['ID', 'E-mail', 'Senha', 'perfil']
     )
 
-    st.table(df)
+    st.dataframe(df)
 
 def ListSalas():
     customerList = []
@@ -73,4 +57,4 @@ def ListSalas():
         columns=['ID', 'Sala']
     )
 
-    st.table(df)
+    st.dataframe(df)
