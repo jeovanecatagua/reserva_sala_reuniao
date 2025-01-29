@@ -14,7 +14,8 @@ def create_tb():
                 sala_reuniao TEXT NOT NULL,
                 dt_reuniao   DATE NOT NULL,
                 hr_inicio    TEXT NOT NULL,
-                hr_fim       TEXT NOT NULL
+                hr_fim       TEXT NOT NULL,
+                dt_insert    DATETIME NOT NULL DEFAULT (DATETIME('now', '-3 hours'))
             )
         ''')
         print("Tabela 'tb_reserva_sala_reuniao' criada com sucesso.")
@@ -23,11 +24,28 @@ def create_tb():
 
     try:
         cursor.execute('''
+            CREATE TABLE IF NOT EXISTS tb_reserva_sala_reuniao_bkp (
+                id           INTEGER NOT NULL,
+                user         TEXT NOT NULL,
+                sala_reuniao TEXT NOT NULL,
+                dt_reuniao   DATE NOT NULL,
+                hr_inicio    TEXT NOT NULL,
+                hr_fim       TEXT NOT NULL,
+                dt_insert    DATETIME NOT NULL
+            )
+        ''')
+        print("Tabela 'tb_reserva_sala_reuniao_bkp' criada com sucesso.")
+    except sqlite3.OperationalError as e:
+        print(f"Erro ao criar tabela 'tb_reserva_sala_reuniao_bkp': {e}")
+
+    try:
+        cursor.execute('''
             CREATE TABLE IF NOT EXISTS tb_usuario (
                 id      INTEGER PRIMARY KEY AUTOINCREMENT,
                 email   TEXT NOT NULL,
                 senha   TEXT NOT NULL,
-                perfil  TEXT NOT NULL
+                perfil  TEXT NOT NULL,
+                dt_insert    DATETIME NOT NULL DEFAULT (DATETIME('now', '-3 hours'))
             )'''
         )
         print("Tabela 'tb_usuario' criada com sucesso.")
@@ -40,7 +58,8 @@ def create_tb():
                 id      INTEGER NOT NULL,
                 email   TEXT NOT NULL,
                 senha   TEXT NOT NULL,
-                perfil  TEXT NOT NULL
+                perfil  TEXT NOT NULL,
+                dt_insert    DATETIME NOT NULL
             )'''
         )
         print("Tabela 'tb_usuario_bkp' criada com sucesso.")
@@ -49,24 +68,10 @@ def create_tb():
 
     try:
         cursor.execute('''
-            CREATE TABLE IF NOT EXISTS tb_reserva_sala_reuniao_bkp (
-                id           INTEGER NOT NULL,
-                user         TEXT NOT NULL,
-                sala_reuniao TEXT NOT NULL,
-                dt_reuniao   DATE NOT NULL,
-                hr_inicio    TEXT NOT NULL,
-                hr_fim       TEXT NOT NULL
-            )
-        ''')
-        print("Tabela 'tb_reserva_sala_reuniao_bkp' criada com sucesso.")
-    except sqlite3.OperationalError as e:
-        print(f"Erro ao criar tabela 'tb_reserva_sala_reuniao_bkp': {e}")
-
-    try:
-        cursor.execute('''
             CREATE TABLE IF NOT EXISTS tb_sala (
                 id    INTEGER PRIMARY KEY AUTOINCREMENT,
-                sala  TEXT NOT NULL
+                sala  TEXT NOT NULL,
+                dt_insert    DATETIME NOT NULL DEFAULT (DATETIME('now', '-3 hours'))
             )
         ''')
         print("Tabela 'tb_sala' criada com sucesso.")
@@ -77,7 +82,8 @@ def create_tb():
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS tb_sala_bkp (
                 id   INTEGER NOT NULL,
-                sala TEXT NOT NULL
+                sala TEXT NOT NULL,
+                dt_insert    DATETIME NOT NULL
             )
         ''')
         print("Tabela 'tb_sala_bkp' criada com sucesso.")
