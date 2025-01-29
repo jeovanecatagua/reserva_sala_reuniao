@@ -118,6 +118,7 @@ def usuario_adm():
     with col7:
         excluir_sala_button = st.sidebar.button("Excluir Sala", key="excluir_sala_button")
     with col7:
+        st.sidebar.title("Backup dados")
         backup_button = st.sidebar.button("Backup", key="backup_button")
 
     # Armazenar estado atual no session_state
