@@ -2,6 +2,7 @@
 import models.reservas as reservas
 import sqlite3
 import streamlit as st
+import io
 
 def get_db_connection():
     return sqlite3.connect("dados_projeto.db", check_same_thread=False)
@@ -300,21 +301,24 @@ def obter_perfil_usuario(usuario):
     conn.commit()
     return usuario_[0] if usuario_ else None
 
-
 def fazer_backup():
-    backup_path = "backup.db"
-    
-    # Criar cópia do banco de dados
+    # Criar conexão com o banco de dados
     conn = sqlite3.connect("dados_projeto.db")
-    with open(backup_path, "wb") as f:
-        for linha in conn.iterdump():
-            f.write(f"{linha}\n".encode("utf-8"))
+    backup = io.StringIO()
+    
+    # Salvar dump do banco no buffer
+    for linha in conn.iterdump():
+        backup.write(f"{linha}\n")
+    
     conn.close()
     
-    return backup_path
+    # Criar um arquivo de bytes para o download
+    backup.seek(0)
+    backup_bytes = io.BytesIO(backup.getvalue().encode("utf-8"))
+    
+    return backup_bytes
 
-# Criar botão de download
+# Criar botão de backup
 if st.button("Fazer Backup Agora"):
     backup_file = fazer_backup()
-    with open(backup_file, "rb") as f:
-        st.download_button("Baixar Backup", f, file_name="backup.db", mime="application/x-sqlite3")
+    st.download_button("Baixar Backup", backup_file, file_name="backup.sql", mime="text/sql")
