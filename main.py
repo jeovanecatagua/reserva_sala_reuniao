@@ -3,7 +3,6 @@ import Pages.reserva_sala_reuniao.Create as PagesCreateReserva
 import Pages.reserva_sala_reuniao.List as PagesListReserva
 import Pages.reserva_sala_reuniao.validacao_user as acesso
 from Controllers.ControllersReservas import create_tb, obter_perfil_usuario
-import Controllers.ControllersReservas as Controller
 
 create_tb()
 print("Tabelas criadas com sucesso!")
@@ -140,7 +139,6 @@ def usuario_adm():
     if st.session_state["active_page"] == "reservar":
         PagesCreateReserva.Incluir()
         PagesListReserva.List()
-        Controller.fazer_backup()
     elif st.session_state["active_page"] == "cancelar":
         PagesCreateReserva.Excluir()
         PagesListReserva.List()
