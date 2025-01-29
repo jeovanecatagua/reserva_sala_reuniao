@@ -3,6 +3,12 @@ import sqlite3
 import pandas as pd
 import time
 
+# --- Define layout baseado no login ---
+if "authenticated" in st.session_state and st.session_state["authenticated"]:
+    st.set_page_config(layout="wide")  # Modo WIDE quando autenticado
+else:
+    st.set_page_config(layout="centered")  # Layout tradicional na tela de login
+
 def verificar_usuario(email, senha):
     con    = sqlite3.connect("dados_projeto.db")
     cursor = con.cursor()
@@ -22,7 +28,7 @@ def authenticate_user():
     if "authenticated" not in st.session_state:
         st.session_state["authenticated"] = False
 
-    # Exibe campos de login caso o usuário não esteja autenticado
+    # Exibe campos de login caso o usuário não esteja autenticado  
     st.subheader("Login")
     email        = st.text_input("E-mail", key="login_email")
     password     = st.text_input("Senha", type="password", key="login_password")
@@ -39,7 +45,7 @@ def authenticate_user():
                 time.sleep(5) 
             with st.success(f"Bem-vindo, {email}!"):
                 time.sleep(2)
-            st.rerun()             
+            st.rerun()          
             return True 
         else:
             st.error("E-mail ou senha inválidos.")

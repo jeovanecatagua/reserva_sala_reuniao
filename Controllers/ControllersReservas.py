@@ -1,11 +1,16 @@
 
 import models.reservas as reservas
 import sqlite3
+import streamlit as st
 
-conn = sqlite3.connect("dados_projeto.db", check_same_thread=False)
-cursor = conn.cursor()
+def get_db_connection():
+    return sqlite3.connect("dados_projeto.db", check_same_thread=False)
+
+@st.cache_data
 
 def create_tb():
+    conn = get_db_connection()
+    cursor = conn.cursor()
     try:
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS tb_reserva_sala_reuniao (
@@ -93,6 +98,8 @@ def create_tb():
     conn.commit()
 
 def Incluir(insert_tb):
+    conn = get_db_connection()
+    cursor = conn.cursor()
     cursor.execute(""" 
         INSERT INTO tb_reserva_sala_reuniao (user, sala_reuniao, dt_reuniao, hr_inicio, hr_fim) 
         VALUES(?, ?, ?, ?, ?)""",
@@ -115,6 +122,8 @@ def Incluir(insert_tb):
   
 
 def Incluir_usuario(insert_tb_usuario):
+    conn = get_db_connection()
+    cursor = conn.cursor()
     cursor.execute(""" 
         INSERT INTO tb_usuario (email, senha, perfil) 
         VALUES(?, ?, ?)""",
@@ -136,6 +145,8 @@ def Incluir_usuario(insert_tb_usuario):
     conn.commit()
 
 def Incluir_sala(insert_tb_sala):
+    conn = get_db_connection()
+    cursor = conn.cursor()
     cursor.execute(""" 
         INSERT INTO tb_sala (sala)
         VALUES(?)""",
@@ -165,6 +176,8 @@ def Incluir_sala(insert_tb_sala):
 #     conn.commit()
 
 def Excluir(excluir_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
     cursor.execute(""" 
         DELETE FROM tb_reserva_sala_reuniao WHERE id = ?""", 
         (excluir_id.id,)
@@ -172,6 +185,8 @@ def Excluir(excluir_id):
     conn.commit()
 
 def ExcluirSala(excluir_sala):
+    conn = get_db_connection()
+    cursor = conn.cursor()
     cursor.execute(""" 
         DELETE FROM tb_sala WHERE sala = ?""", 
         (excluir_sala.sala,)
@@ -179,6 +194,8 @@ def ExcluirSala(excluir_sala):
     conn.commit()
 
 def ExcluirUsuario(excluir_email):
+    conn = get_db_connection()
+    cursor = conn.cursor()
     cursor.execute(""" 
         DELETE FROM tb_usuario WHERE email = ?""", 
         (excluir_email.email,)
@@ -188,6 +205,8 @@ def ExcluirUsuario(excluir_email):
 
 
 def AlterarUsuario(alterar_tb_usuario):
+    conn = get_db_connection()
+    cursor = conn.cursor()
     cursor.execute(""" 
         UPDATE tb_usuario
         SET   perfil = ?
@@ -199,6 +218,8 @@ def AlterarUsuario(alterar_tb_usuario):
 
 
 def selecionarTodos():
+    conn = get_db_connection()
+    cursor = conn.cursor()
     cursor.execute("SELECT id, user, sala_reuniao, strftime('%d/%m/%Y', dt_reuniao) AS dt_reuniao, hr_inicio, hr_fim FROM tb_reserva_sala_reuniao")
     customerList = []
 
@@ -208,6 +229,8 @@ def selecionarTodos():
     return customerList
 
 def selecionarTodosUsuarios():
+    conn = get_db_connection()
+    cursor = conn.cursor()
     cursor.execute("SELECT * FROM tb_usuario")
     customerList = []
 
@@ -217,6 +240,8 @@ def selecionarTodosUsuarios():
     return customerList
 
 def selecionarSalas():
+    conn = get_db_connection()
+    cursor = conn.cursor()
     cursor.execute("SELECT * FROM tb_sala")
     customerList = []
 
@@ -226,6 +251,8 @@ def selecionarSalas():
     return customerList
 
 def obter_reservas_por_sala_e_data(sala, data):
+    conn = get_db_connection()
+    cursor = conn.cursor()
     query = """
         SELECT 
             hr_inicio, hr_fim
@@ -241,6 +268,8 @@ def obter_reservas_por_sala_e_data(sala, data):
 
 
 def obter_usuarios_cadastrados(usuario):
+    conn = get_db_connection()
+    cursor = conn.cursor()
     query = """
         SELECT 
             email
@@ -256,6 +285,8 @@ def obter_usuarios_cadastrados(usuario):
 
 
 def obter_perfil_usuario(usuario):
+    conn = get_db_connection()
+    cursor = conn.cursor()
     query = """
         SELECT 
             perfil
