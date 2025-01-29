@@ -117,7 +117,11 @@ def Incluir_usuario(insert_tb_usuario):
         (insert_tb_usuario.email, insert_tb_usuario.senha, insert_tb_usuario.perfil)
     )
     conn.commit()
-
+    
+    if cursor.lastrowid is None:
+        print("Erro: Nenhum usuário foi inserido!")
+        return
+    
     cursor.execute("""
         INSERT INTO tb_usuario_bkp 
         SELECT * 
