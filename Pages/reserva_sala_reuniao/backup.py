@@ -41,7 +41,3 @@ def fazer_backup():
             )
     else:
         st.error("Banco de dados não encontrado!")
-
-# Exibir botão para fazer backup
-if st.button("Fazer Backup do Banco de Dados"):
-    fazer_backup()
