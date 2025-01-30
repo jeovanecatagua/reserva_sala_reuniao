@@ -99,6 +99,32 @@ st.markdown(
 )
 
 def usuario_adm():
+
+    st.markdown(
+        """
+        <style>
+        /* Garantir que os botões da sidebar tenham o mesmo tamanho */
+        .stButton button {
+            width: 80%; /* Define a largura total */
+            height: 25px; /* Define uma altura fixa */
+            border: 2px solid #007BFF; /* Borda azul */
+            background-color: white; /* Fundo branco */
+            color: #007BFF; /* Texto azul */
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        /* Estilizar quando o botão for clicado */
+        .stButton button:active {
+            background-color: red !important; /* Fundo vermelho */
+            color: white !important; /* Texto branco */
+            border-color: darkred !important; /* Borda vermelha */
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
     # Criar colunas para botões
     col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
     with col1:
